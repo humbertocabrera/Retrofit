@@ -1,8 +1,11 @@
 package edu.iest.retrofit
 
+import android.database.MergeCursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
@@ -34,10 +37,18 @@ class MainActivity : AppCompatActivity() {
                     "No fue posible conectar a API",
                     Toast.LENGTH_SHORT
                 ).show()
-
             }
-
-
         })
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.option_menu_list_images){
+            Toast.makeText(this, "OPTION menu 1", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?) : Boolean {
+        menuInflater.inflate(R.menu.menu_images, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
