@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
 import edu.iest.retrofit.models.ImagenRandom
+import edu.iest.retrofit.models.ListaBreed
 import edu.iest.retrofit.network.API
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         apiCall.imagenAleatoria().enqueue(object : Callback<ImagenRandom> {
             override fun onResponse(call: Call<ImagenRandom>, response: Response<ImagenRandom>) {
-                Picasso.get().load(response.body()?.message).into(ivPicasso);
+                Picasso.get().load(response.body()?.message).into(ivPicasso)
                 Log.d("API_PRUEBA", "status es " + response.body()?.status)
                 Log.d("API_PRUEBA ", "message es " + response.body()?.message)
 //        Aqui hacer lo que necesitemos con los datos
@@ -43,6 +44,24 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.option_menu_list_images){
             Toast.makeText(this, "OPTION menu 1", Toast.LENGTH_SHORT).show()
+            val apiCall = API().crearServicioAPI()
+            apiCall.listaImagenesDePerrosPorRaza("hound").enqueue(object: Callback<ListaBreed>{
+                override fun onResponse(call: Call<ListaBreed>, response: Response<ListaBreed>) {
+                    //nuestra logica
+                    val dogs = response.body()?.message///array
+                    Log.d("PRUEBAS", "Status de la respuesta ${response.body()?.status}")
+                    if (dogs != null){
+                        for (dog in dogs){
+                            Log.d("PRUEBAS", "Perro es $dog")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ListaBreed>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
         }
         return super.onOptionsItemSelected(item)
     }
