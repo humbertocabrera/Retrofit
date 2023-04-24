@@ -1,5 +1,6 @@
-package edu.iest.retrofit.network
+package edu.iest.retrofit.models
 
+import edu.iest.retrofit.network.ApiInterface
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
